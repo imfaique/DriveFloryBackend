@@ -1,25 +1,23 @@
 const asyncHandler = require('express-async-handler')
-const Mechanic = require('../models/mechanicModel')
+const Driver = require('../models/mechanicModel')
 const generateToken = require('../utils/generateToken')
 
-const registerMechanic = asyncHandler(async (req, res) => {
+const registerDriver = asyncHandler(async (req, res) => {
 
-    const { name, cnicNo, contactNo, address, mechanicType, speciality, username, email, password, rating } = req.body
+    const { name, cnicNo, contactNo, address, username, email, password } = req.body
 
-    const mechanicExists = await Mechanic.findOne({ cnicNo })
+    const driverExists = await Driver.findOne({ cnicNo })
 
-    if (mechanicExists) {
+    if (driverExists) {
         res.status(400)
-        throw new Error('Mechanic Already Exists')
+        throw new Error('Driver Already Exists')
     }
 
-    const mechanic = await Mechanic.create({
+    const driver = await Driver.create({
         name,
         cnicNo,
         contactNo,
         address,
-        mechanicType,
-        speciality,
         username,
         email,
         password,
@@ -36,8 +34,7 @@ const registerMechanic = asyncHandler(async (req, res) => {
             email: mechanic.email,
             contactNo: mechanic.contactNo,
             address: mechanic.address,
-            mechanicType: mechanic.mechanicType,
-            speciality: mechanic.speciality,
+            
 
         })
     } else {
@@ -49,10 +46,10 @@ const registerMechanic = asyncHandler(async (req, res) => {
 const authMechanic = asyncHandler(async (req, res) => {
 
     const { username, password } = req.body
-    console.log("Mechanic")
+    console.log("Driver")
     console.log(username, password)
 
-    const mechanic = await Mechanic.findOne({ username })
+    const mechanic = await Driver.findOne({ username })
 
     if (mechanic && (await mechanic.matchPassword(password))) {
         res.json({
@@ -71,52 +68,52 @@ const authMechanic = asyncHandler(async (req, res) => {
 })
 
 // const getCarTuningMechanic = asyncHandler(async (req, res) => {
-//     Mechanic.find({ mechanicType: 'Car', speciality: 'Tuning' }, function (err, mechanics) {
-//         if (err) return res.status(500).send("There was a problem finding the Mechanic.");
+//     Driver.find({ mechanicType: 'Car', speciality: 'Tuning' }, function (err, mechanics) {
+//         if (err) return res.status(500).send("There was a problem finding the Driver.");
 //         res.status(200).send(mechanics);
 //     })
 // })
 
 // const getCarAxleMechanic = asyncHandler(async (req, res) => {
-//     Mechanic.find({ mechanicType: 'Car', speciality: 'Axle' }, function (err, mechanics) {
-//         if (err) return res.status(500).send("There was a problem finding the Mechanic.");
+//     Driver.find({ mechanicType: 'Car', speciality: 'Axle' }, function (err, mechanics) {
+//         if (err) return res.status(500).send("There was a problem finding the Driver.");
 //         res.status(200).send(mechanics);
 //     })
 // })
 
 // const getCarACMechanic = asyncHandler(async (req, res) => {
-//     Mechanic.find({ mechanicType: 'Car', speciality: 'A/C' }, function (err, mechanics) {
-//         if (err) return res.status(500).send("There was a problem finding the Mechanic.");
+//     Driver.find({ mechanicType: 'Car', speciality: 'A/C' }, function (err, mechanics) {
+//         if (err) return res.status(500).send("There was a problem finding the Driver.");
 //         res.status(200).send(mechanics);
 //     })
 // })
 
 // const getBikeMechanic = asyncHandler(async (req, res) => {
-//     Mechanic.find({ mechanicType: 'Bike' }, function (err, mechanics) {
-//         if (err) return res.status(500).send("There was a problem finding the Mechanic.");
+//     Driver.find({ mechanicType: 'Bike' }, function (err, mechanics) {
+//         if (err) return res.status(500).send("There was a problem finding the Driver.");
 //         res.status(200).send(mechanics);
 //     })
 // })
 
 const getCarTuningMechanic = asyncHandler(async (req, res) => {
-    const mechanic = await Mechanic.find({ mechanicType: 'Car', speciality: 'Tuning' }).sort({ rating: -1 })
+    const mechanic = await Driver.find({ mechanicType: 'Car', speciality: 'Tuning' }).sort({ rating: -1 })
     return res.json(mechanic)
 })
 
 const getCarAxleMechanic = asyncHandler(async (req, res) => {
-    const mechanic = await Mechanic.find({ mechanicType: 'Car', speciality: 'Axle' }).sort({ rating: -1 })
+    const mechanic = await Driver.find({ mechanicType: 'Car', speciality: 'Axle' }).sort({ rating: -1 })
     return res.json(mechanic)
 })
 
 
 const getCarACMechanic = asyncHandler(async (req, res) => {
-    const mechanic = await Mechanic.find({ mechanicType: 'Car', speciality: 'AC' }).sort({ rating: -1 })
+    const mechanic = await Driver.find({ mechanicType: 'Car', speciality: 'AC' }).sort({ rating: -1 })
     return res.json(mechanic)
 })
 
 
 const getBikeMechanic = asyncHandler(async (req, res) => {
-    const mechanic = await Mechanic.find({ mechanicType: 'Bike' }).sort({ rating: -1 })
+    const mechanic = await Driver.find({ mechanicType: 'Bike' }).sort({ rating: -1 })
     return res.json(mechanic)
 
 
@@ -124,9 +121,9 @@ const getBikeMechanic = asyncHandler(async (req, res) => {
 
 const getRating = asyncHandler(async (req, res) => {
 
-    Mechanic.ratings = { 1: 1, 2: 1, 3: 1, 4: 1, 5: 1 }
-    Mechanic.findByIdAndUpdate(id, { $inc: req.body })
-    Mechanic.findByIdAndUpdate(req.body, { ratings: { 1: 3, 2: 1, 3: 1, 4: 1, 5: 1 } }, { new: true })
+    Driver.ratings = { 1: 1, 2: 1, 3: 1, 4: 1, 5: 1 }
+    Driver.findByIdAndUpdate(id, { $inc: req.body })
+    Driver.findByIdAndUpdate(req.body, { ratings: { 1: 3, 2: 1, 3: 1, 4: 1, 5: 1 } }, { new: true })
     get: {
         let items = Object.entries(req.body);
         let sum = 0;
@@ -140,9 +137,9 @@ const getRating = asyncHandler(async (req, res) => {
 })
 
 const setRating = asyncHandler(async (req, res) => {
-    Mechanic.ratings = { 1: 1, 2: 1, 3: 1, 4: 1, 5: 1 }
-    Mechanic.findByIdAndUpdate(id, { $inc: req.body })
-    Mechanic.findByIdAndUpdate(req.body, { ratings: { 1: 3, 2: 1, 3: 1, 4: 1, 5: 1 } }, { new: true })
+    Driver.ratings = { 1: 1, 2: 1, 3: 1, 4: 1, 5: 1 }
+    Driver.findByIdAndUpdate(id, { $inc: req.body })
+    Driver.findByIdAndUpdate(req.body, { ratings: { 1: 3, 2: 1, 3: 1, 4: 1, 5: 1 } }, { new: true })
 
     set: {
         if (!(this instanceof mongoose.Document)) {
@@ -164,4 +161,4 @@ const setRating = asyncHandler(async (req, res) => {
 
 
 
-module.exports = { registerMechanic, authMechanic, getCarTuningMechanic, getCarAxleMechanic, getCarACMechanic, getBikeMechanic, setRating, getRating }
+module.exports = { registerDriver, authMechanic, getCarTuningMechanic, getCarAxleMechanic, getCarACMechanic, getBikeMechanic, setRating, getRating }

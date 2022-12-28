@@ -3,6 +3,7 @@ const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 const adminRoutes = require('./routes/adminRoutes')
 const mechanicRoute = require('./routes/mechanicRoute')
+const carRegistrationRoute = require('./routes/carRegistrationRoutes')
 const towingVanRoute = require('./routes/towingVanRoutes')
 const userRoute = require('./routes/userRoutes')
 const bookingRoute = require('./routes/bookingRoutes')
@@ -32,6 +33,8 @@ app.get('/', (req, res) => {
 app.use('/api/admin', adminRoutes)
 
 app.use('/api/mechanics', mechanicRoute)
+
+app.use('/api/carRegistration', carRegistrationRoute)
 
 app.use('/api/towingVan', towingVanRoute)
 

@@ -1,9 +1,9 @@
 const express = require('express');
-const { registerMechanic, authMechanic, getCarTuningMechanic, getCarAxleMechanic, getCarACMechanic, getBikeMechanic } = require('../controllers/mechanicController');
+const { registerDriver, authMechanic, getCarTuningMechanic, getCarAxleMechanic, getCarACMechanic, getBikeMechanic } = require('../controllers/mechanicController');
 
 const router = express.Router()
 
-router.route('/register').post(registerMechanic)
+router.route('/register').post(registerDriver)
 router.route('/login').post(authMechanic)
 router.route('/cartuning').get(getCarTuningMechanic)
 router.route('/caraxle').get(getCarAxleMechanic)

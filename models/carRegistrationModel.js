@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs')
 
-const driverSchema = mongoose.Schema(
+const carRegistrationSchema = mongoose.Schema(
     {
         name: {
             type: String,
@@ -26,6 +26,29 @@ const driverSchema = mongoose.Schema(
             index: true,
         },
 
+        vehicleType: {
+            type: String,
+            required: true,
+
+        },
+
+        companyName: {
+            type: String,
+            required: true,
+        },
+
+        model: {
+            type: String,
+            required: true,
+            
+        },
+
+        registrationNo: {
+            type: String,
+            required: true,
+            unique: true,
+        },
+
         username: {
             type: String,
             required: true,
@@ -44,7 +67,9 @@ const driverSchema = mongoose.Schema(
             required: true
         },
 
-      
+        images: { 
+            type: Array,
+         },
 
 
     },
@@ -54,7 +79,7 @@ const driverSchema = mongoose.Schema(
     }
 )
 
-driverSchema.pre('save', async function (next) {
+carRegistrationSchema.pre('save', async function (next) {
     if (!this.isModified('password')) {
         next()
     }
@@ -64,10 +89,10 @@ driverSchema.pre('save', async function (next) {
 
 })
 
-driverSchema.methods.matchPassword = async function (enteredPassword) {
+carRegistrationSchema.methods.matchPassword = async function (enteredPassword) {
     return await bcrypt.compare(enteredPassword, this.password)
 }
 
-const Driver = mongoose.model('Driver', driverSchema)
+const CarRegistration = mongoose.model('CarRegistration', carRegistrationSchema)
 
-module.exports = Driver
+module.exports = CarRegistration
