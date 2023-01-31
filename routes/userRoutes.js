@@ -1,5 +1,12 @@
 const express = require('express');
+const mongoose = require('mongoose');
+const user = require('./../models/userModel');
+const bcrypt = require('bcryptjs');
+const crypto = require('crypto');
+const jwt = require('jsonwebtoken');
+const nodemailer = require('nodemailer');
 const { registerUser, authUser, findUser, updateUser, changePassword, forgotPassword } = require('../controllers/userController');
+const nodemon = require('nodemon');
 
 const router = express.Router()
 

@@ -1,15 +1,43 @@
+const { application } = require('express');
 const asyncHandler = require('express-async-handler')
 const CarRegistration = require('../models/carRegistrationModel')
 const generateToken = require('../utils/generateToken')
+const cloudinary = require('cloudinary').v2;
 
-
+cloudinary.config({
+    cloud_name: 'dej429te5',
+    api_key: '247639657615337',
+    api_secret: '8LgeIJ4d5RRcSj53GEUMiUTJd68',
+    secure: true
+});
 
 
 
 const registerCar = asyncHandler(async (req, res) => {
 
+    // app.post("/uploadImage", (req, res) => {
+    //     uploadImage(req.body.image)
+    //         .then((url) => res.send(url))
+    //         .catch((err) => res.status(500).send(err));
+
+
+    // });
+
+    // app.post("/uploadMultipleImages", (req, res) => {
+    //     uploadMultipleImages(req.body.images)
+    //         .then((urls) => res.send(urls))
+    //         .catch((err) => res.status(500).send(err));
+
+
+    // });
+
     console.log(req.body);
-    const { name, cnicNo, contactNo, address, vehicleType, companyName, model, registrationNo, username, email, password, image} = req.body
+
+    // const file = req.files.image;
+    // cloudinary.uploader.upload(file.tempFilePath, (err, result) => {
+    //     console.log(result);
+    // })
+    const { name, cnicNo, contactNo, address, vehicleType, companyName, model, registrationNo, username, email, password, image, rent, modelYear } = req.body
 
     console.log({
         name,
@@ -23,8 +51,9 @@ const registerCar = asyncHandler(async (req, res) => {
         username,
         email,
         password,
-        image
-
+        image,
+        rent,
+        modelYear
     });
 
     const carExists = await CarRegistration.findOne({ registrationNo })
@@ -46,8 +75,9 @@ const registerCar = asyncHandler(async (req, res) => {
         username,
         email,
         password,
-        image
-
+        image,
+        rent,
+        modelYear
     })
 
     console.log(car);
@@ -65,7 +95,10 @@ const registerCar = asyncHandler(async (req, res) => {
             companyName: car.companyName,
             // model: car.model,
             registrationNo: car.registrationNo,
-            image:car.image
+            image: car.image,
+            rent: car.rent,
+            modelYear: car.modelYear
+
 
         })
     } else {
@@ -88,8 +121,6 @@ const authCarOwner = asyncHandler(async (req, res) => {
             email: carOwner.email,
             contactNo: carOwner.contactNo,
             address: carOwner.address,
-            mechanicType: carOwner.mechanicType,
-            speciality: carOwner.speciality,
             token: generateToken(carOwner._id)
         })
     } else {
@@ -126,20 +157,20 @@ const authCarOwner = asyncHandler(async (req, res) => {
 //     })
 // })
 
-const getCarTuningMechanic = asyncHandler(async (req, res) => {
-    const mechanic = await Mechanic.find({ mechanicType: 'Car', speciality: 'Tuning' }).sort({ rating: -1 })
-    return res.json(mechanic)
+const getCar = asyncHandler(async (req, res) => {
+    const Car = await CarRegistration.find({ vehicleType: 'Car' })
+    return res.json(Car)
 })
 
-const getCarAxleMechanic = asyncHandler(async (req, res) => {
-    const mechanic = await Mechanic.find({ mechanicType: 'Car', speciality: 'Axle' }).sort({ rating: -1 })
-    return res.json(mechanic)
+const getHiace = asyncHandler(async (req, res) => {
+    const Hiace = await CarRegistration.find({ vehicleType: 'Hiace' })
+    return res.json(Hiace)
 })
 
 
-const getCarACMechanic = asyncHandler(async (req, res) => {
-    const mechanic = await Mechanic.find({ mechanicType: 'Car', speciality: 'AC' }).sort({ rating: -1 })
-    return res.json(mechanic)
+const getCoaster = asyncHandler(async (req, res) => {
+    const Coaster = await CarRegistration.find({ vehicleType: 'Coaster' }).sort({ rating: -1 })
+    return res.json(Coaster)
 })
 
 
@@ -194,4 +225,4 @@ const setRating = asyncHandler(async (req, res) => {
 
 
 
-module.exports ={registerCar, authCarOwner}
+module.exports = { registerCar, authCarOwner, getCar, getHiace, getCoaster }

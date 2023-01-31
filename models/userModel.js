@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs')
 const { roles } = require('../config/roles')
 
+
 const userSchema = mongoose.Schema(
     {
         firstname: {
@@ -46,13 +47,17 @@ const userSchema = mongoose.Schema(
             default: 'user'
         },
 
+        emailToken: {
+            type: String
+        },
+
         resetLink: {
             data: String,
             default: ''
         },
 
         isVerified: {
-            type: Boolean
+            type: Boolean,
         }
     },
 

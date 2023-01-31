@@ -40,7 +40,7 @@ const carRegistrationSchema = mongoose.Schema(
         model: {
             type: String,
             required: true,
-            
+
         },
 
         registrationNo: {
@@ -67,9 +67,20 @@ const carRegistrationSchema = mongoose.Schema(
             required: true
         },
 
-        images: { 
+
+        images: {
             type: Array,
-         },
+        },
+
+        rent: {
+            type: Number,
+            required: true
+        },
+
+        modelYear: {
+            type: String,
+            required: true
+        }
 
 
     },

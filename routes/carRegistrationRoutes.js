@@ -1,13 +1,15 @@
 const express = require('express');
-const { registerCar, authCarOwner } = require('../controllers/carRegistrationController');
+const { registerCar, authCarOwner, getCar, getHiace, getCoaster } = require('../controllers/carRegistrationController');
 
 const router = express.Router()
 
 router.route('/register').post(registerCar)
 router.route('/login').post(authCarOwner)
-// router.route('/cartuning').get(getCarTuningMechanic)
-// router.route('/caraxle').get(getCarAxleMechanic)
-// router.route('/carac').get(getCarACMechanic)
-// router.route('/bike').get(getBikeMechanic)
+router.route('/car').get(getCar)
+router.route('/hiace').get(getHiace)
+router.route('/coaster').get(getCoaster)
+
+
+
 
 module.exports = router;

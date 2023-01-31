@@ -2,7 +2,11 @@ const asyncHandler = require('express-async-handler')
 const dotenv = require('dotenv');
 const User = require('../models/userModel')
 const generateToken = require('../utils/generateToken')
-const bcrypt = require('bcryptjs')
+const nodemailer = ('nodemailer')
+const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
+const crypto = require('crypto');
+const jwt = require('jsonwebtoken');
 // const mailgun = require("mailgun-js");
 
 // dotenv.config()
@@ -13,10 +17,11 @@ const bcrypt = require('bcryptjs')
 
 
 
+
 const registerUser = asyncHandler(async (req, res) => {
 
     const { firstname, lastname, email, contact, username, password } = req.body
-    // console.log(req.body);
+    console.log(req.body);
 
     const userExist = await User.findOne({ email })
     if (userExist) {
@@ -30,9 +35,11 @@ const registerUser = asyncHandler(async (req, res) => {
         contact,
         username,
         password,
+        emailToken: crypto.getRandomBytes(64).toString
     })
 
     if (user) {
+
         res.status(200).send(user)
     } else {
         res.status(500).send("Problem Signing Up!")
@@ -66,7 +73,7 @@ const authUser = asyncHandler(async (req, res) => {
 const findUser = asyncHandler(async (req, res) => {
     console.log(req.params._id);
     User.findOne({ "_id": req.params._id }, function (err, user) {
-        if (err) return res.status(500).send("There was a problem finding the Mechanic.");
+        if (err) return res.status(500).send("There was a problem finding the User.");
         res.status(200).send(JSON.stringify(user));
     })
 })
