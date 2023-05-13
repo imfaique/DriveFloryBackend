@@ -21,6 +21,27 @@ const BookingSchema = mongoose.Schema(
 
         },
 
+        User_Address: {
+            type: String,
+            required: true,
+
+        },
+        Owner_Name: {
+            type: String,
+            required: true,
+
+        },
+        Owner_No: {
+            type: String,
+            required: true,
+
+        },
+        Registration_No: {
+            type: String,
+            required: true,
+
+        },
+
         Car_Company: {
             type: String,
             required: true,
@@ -39,15 +60,20 @@ const BookingSchema = mongoose.Schema(
             required: true,
 
         },
-
-
-        Booking_Date: {
+        Rent: {
             type: String,
             required: true,
+
         },
+
+        // Booking_Date: {
+        //     type: String,
+        //     required: true,
+        // },
 
         Requested_Date: {
             type: String,
+            required: true,
         },
 
         // Type: {

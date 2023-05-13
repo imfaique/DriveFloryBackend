@@ -16,14 +16,27 @@ const completedBookingRoute = require('./routes/completedBookingRoutes')
 const driverRoute = require('./routes/driverRoute')
 const fileUpload = require('express-fileupload')
 
+
 const { notFound, errorHandler } = require('./middlewares/errorMiddleware');
-const cors = require('cors')
+const cors = require('cors');
+const multer = require('multer');
+const upload = multer({ des: 'uploads/' })
+const e = require('express');
 
 const app = express();
 dotenv.config()
 connectDB()
 app.use(express.json())
 app.use(cors())
+
+app.post('/api/image', upload.single('image'), (req, res) => {
+    console.log(req.file)
+    if (!req.file) {
+        res.send({ code: 500, msg: 'err' })
+    } else {
+        res.send({ code: 200, msg: 'upload successfully' })
+    }
+})
 
 
 app.get('/', (req, res) => {

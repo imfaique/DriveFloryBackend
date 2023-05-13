@@ -57,4 +57,9 @@ const registerDriver = asyncHandler(async (req, res) => {
     }
 })
 
-module.exports = { registerDriver }
+const getDriver = asyncHandler(async (req, res) => {
+    const Driver = await driverRegistration.find({})
+    return res.json(Driver)
+})
+
+module.exports = { registerDriver, getDriver }

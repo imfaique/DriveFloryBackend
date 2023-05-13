@@ -4,18 +4,22 @@ const generateToken = require('../utils/generateToken')
 
 const Bookings = asyncHandler(async (req, res) => {
 
-    const { User_Name, User_Number, User_Email, Car_Company, Model, Model_Year, Booking_Date, Requested_Date } = req.body
+    const { User_Name, User_Number, User_Email, User_Address, Owner_Name, Owner_No, RegistrationNo, Car_Company, Model, Model_Year, Rent, Requested_Date } = req.body
 
     const booking = await Booking.create({
         User_Name,
         User_Number,
         User_Email,
+        User_Address,
+        Owner_Name,
+        Owner_No,
+        RegistrationNo,
         Car_Company,
         Model,
         Model_Year,
-        Booking_Date,
+        Rent,
         Requested_Date,
-        
+
 
     }, function (err, booking) {
         if (err) return res.status(500).send("There was a problem Booking .");

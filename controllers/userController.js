@@ -1,12 +1,36 @@
 const asyncHandler = require('express-async-handler')
 const dotenv = require('dotenv');
 const User = require('../models/userModel')
+// const userVerification = require('../models/userVerification')
 const generateToken = require('../utils/generateToken')
-const nodemailer = ('nodemailer')
+// const nodemailer = require('nodemailer')
+// const { v4: uuidv4 } = require('uuid')
 const mongoose = require('mongoose');
+// require('dotenv').config();
 const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
+
+
+// let transpoter = nodemailer.createTransport({
+//     service: 'gmail',
+//     auth: {
+//         user: process.env.AUTH_EMAIL,
+//         pass: process.env.AUTH_PASS
+//     }
+
+// })
+
+// transpoter.verify((error, success) => {
+//     if (error) {
+//         console.log(error)
+//     } else {
+//         console.log('ready for messages')
+//         console.log(success)
+//     }
+// })
+
+
 // const mailgun = require("mailgun-js");
 
 // dotenv.config()
@@ -111,6 +135,18 @@ const changePassword = asyncHandler(async (req, res) => {
     }
 
 })
+
+// const emailtoken= jwt.sign({
+//     username: req.body.username    
+// },'secret1234',{expiresIn: '1h'})
+// ElementInternals.verifyUserEmail(req.body.id,req.body.email,req.body.username, emailtoken)
+// User.save()
+// .then(data=>{
+//     res.json(data)
+// })
+// .catch(error=>{
+//     res.json(error)
+// })
 
 const forgotPassword = asyncHandler(async (req, res) => {
     console.log(req.params._id);

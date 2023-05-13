@@ -158,7 +158,7 @@ const authCarOwner = asyncHandler(async (req, res) => {
 // })
 
 const getCar = asyncHandler(async (req, res) => {
-    const Car = await CarRegistration.find({ vehicleType: 'Car' })
+    const Car = await CarRegistration.find({})
     return res.json(Car)
 })
 
