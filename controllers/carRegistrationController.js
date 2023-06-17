@@ -37,7 +37,7 @@ const registerCar = asyncHandler(async (req, res) => {
     // cloudinary.uploader.upload(file.tempFilePath, (err, result) => {
     //     console.log(result);
     // })
-    const { name, cnicNo, contactNo, address, vehicleType, companyName, model, registrationNo, username, email, password, image, rent, modelYear } = req.body
+    const { name, cnicNo, contactNo, address, vehicleType, companyName, model, registrationNo, username, email, password, images, rent, modelYear } = req.body
 
     console.log({
         name,
@@ -51,7 +51,7 @@ const registerCar = asyncHandler(async (req, res) => {
         username,
         email,
         password,
-        image,
+        images,
         rent,
         modelYear
     });
@@ -62,6 +62,10 @@ const registerCar = asyncHandler(async (req, res) => {
         res.status(400)
         throw new Error('Car Already Exists')
     }
+
+    images.map(image => {
+        console.log('image', image)
+    })
 
     const car = await CarRegistration.create({
         name,
@@ -75,7 +79,7 @@ const registerCar = asyncHandler(async (req, res) => {
         username,
         email,
         password,
-        image,
+        images,
         rent,
         modelYear
     })
